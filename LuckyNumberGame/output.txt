@@ -1,0 +1,62 @@
+Script started on Wed 26 Aug 2026 09:20:22 PM MDT
+osc@ubuntu:~/LuckyNumberGame$ make clean
+rm main.o LuckyNumber.o game
+osc@ubuntu:~/LuckyNumberGame$ make
+gcc -Wno-implicit-function-declaration -c main.c
+gcc -Wno-implicit-function-declaration -c LuckyNumber.c
+gcc -Wno-implicit-function-declaration main.o LuckyNumber.o -o game
+osc@ubuntu:~/LuckyNumberGame$ sudo make install
+[sudo] password for osc: 
+cp game /usr/local/bin
+osc@ubuntu:~/LuckyNumberGame$ game
+Enter a number from 1-5:
+3
+Guess too small. Try again.
+Enter a number from 1-5:
+3
+You Win!
+Win Count: 1
+Less Than Count: 1
+Greater Than Count: 0
+Do you wish to play again? (Y/N)
+n
+Goodbye!
+osc@ubuntu:~/LuckyNumberGame$ sudo make uninstall
+rm /usr/local/bin/game
+osc@ubuntu:~/LuckyNumberGame$ game
+bash: /usr/local/bin/game: No such file or directory
+osc@ubuntu:~/LuckyNumberGame$ ./game
+Enter a number from 1-5:
+3
+Guess too large. Try again.
+Enter a number from 1-5:
+3
+Guess too large. Try again.
+Enter a number from 1-5:
+3
+Guess too large. Try again.
+Enter a number from 1-5:
+3
+Guess too large. Try again.
+Enter a number from 1-5:
+3
+Guess too small. Try again.
+Enter a number from 1-5:
+3
+Guess too small. Try again.
+Enter a number from 1-5:
+3
+Guess too small. Try again.
+Enter a number from 1-5:
+3
+You Win!
+Win Count: 1
+Less Than Count: 3
+Greater Than Count: 4
+Do you wish to play again? (Y/N)
+3 n
+Goodbye!
+osc@ubuntu:~/LuckyNumberGame$ exit
+exit
+
+Script done on Wed 26 Aug 2026 09:21:17 PM MDT
