@@ -2,9 +2,10 @@
 #include <linux/module.h>
 #include <linux/uaccess.h>
 #include <linux/fs.h>
-#include <linux/proc_fs.h><
+#include <linux/proc_fs.h>
 #include <linux/time.h>
 #include <linux/random.h>
+#include <linux/string.h>
 
 //Module metadata
 MODULE_AUTHOR("Michael Bergstrom");
@@ -17,15 +18,15 @@ static struct proc_dir_entry* proc_entry;
 Note: I transalted the Ruby code from the Kruskal's algorithm site given to C with ChatGPT,
       but converted the code myself into kernel code.
 */
-struct Edge {
+typedef struct Edge {
 	int x;
 	int y;
 	int direction;
-};
+} Edge;
 
-struct Tree {
+typedef struct Tree {
 	struct Tree *parent;
-};
+} Tree;
 
 //1 is north, 2 is south, 4 is east, and 8 is west
 int dx(int direction)
@@ -96,63 +97,83 @@ void connect(Tree *tree1, Tree *tree2)
 	root(tree2)->parent = tree1;
 }
 
-void display_maze(int grid[5][5])
+char* display_maze(int grid[5][5])
 {
+	char greeting[500] = "";
+	strcat(greeting, "\033[H");
 	printk(KERN_INFO "\033[H");
-	print(KERN_INFO " ");
-
-	for(int i=0; i<5*2-1; i++) {
+	strcat(greeting, " ");
+	printk(KERN_INFO " ");
+	int i;
+	for(i=0; i<5*2-1; i++) {
+		strcat(greeting, "_");
 		printk(KERN_INFO "_");
 	}
 
+	strcat(greeting, "\n");
 	printk(KERN_INFO "\n");
-
-	for(int y=0; y<5; y++) {
+	int y;
+	int x;
+	for(y=0; y<5; y++) {
+		strcat(greeting, "|");
 		printk(KERN_INFO "|");
 
-		for(int x=0; x<5; x++) {
+		for(x=0; x<5; x++) {
 			int cell = grid[y][x];
 
 			if(cell == 0) {
+				strcat(greeting, "\033[47m");
 				printk(KERN_INFO "\033[47m");
 			}
 
 			if((cell & 2) != 0) {
+				strcat(greeting, " ");
 				printk(KERN_INFO " ");
 			}
 			else {
+				strcat(greeting, "_");
 				printk(KERN_INFO "_");
 			}
 
 			if((cell & 4) != 0) {
 				if(x+1 < 5) {
 					if(((cell | grid[y][x+1]) & 2) != 0) {
+						strcat(greeting, " ");
 						printk(KERN_INFO " ");
 					}
 					else {
+						strcat(greeting, "_");
 						printk(KERN_INFO "_");
 					}
 				}
+				else {
+					strcat(greeting, " ");
+					printk(KERN_INFO " ");
+				}
 			}
 			else {
-				printk(KERN_INFO " ");
+				strcat(greeting, "|");
+				printk(KERN_INFO "|");
 			}
-		}
-		else {
-			printk(KERN_INFO "|");
-		}
 
 		if(cell == 0) {
+			strcat(greeting, "\033[m");
 			printk(KERN_INFO "\033[m");
 		}
 	}
 
+	strcat(greeting, "\n");
 	printk(KERN_INFO "\n");
+
+	return greeting;
 }
 
 void shuffle_edges(Edge edges[], int count)
 {
-	for(int i = count-1; i>0; i--) {
+	int i;
+	int j;
+	Edge temp;
+	for(i = count-1; i>0; i--) {
 		int j = get_random_u32() % (i + 1);
 
 		Edge temp = edges[i];
@@ -167,18 +188,20 @@ Description: custom read function
 */
 static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t count, loff_t* offset)
 {
+	char greeting[500];
 	int grid[5][5];
+	Tree sets[5][5];
 
-	for(int y=0; y<5; y++) {
-		for(int x=0; x<5; x++) {
+	int y;
+	int x;
+	for(y=0; y<5; y++) {
+		for(x=0; x<5; x++) {
 			grid[y][x] = 0;
 		}
 	}
 
-	Tree sets[5][5];
-
-	for(int y=0; y<5; y++) {
-		for(int x=0; x<5; x++) {
+	for(y=0; y<5; y++) {
+		for(x=0; x<5; x++) {
 			initialize_tree(&sets[y][x]);
 		}
 	}
@@ -189,8 +212,8 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 
 	int edge_count = 0;
 
-	for(int y=0; y<5; y++) {
-		for(int x=0; x<0; x++) {
+	for(y=0; y<5; y++) {
+		for(x=0; x<0; x++) {
 			if(y>0) {
 				edges[edge_count].x = x;
 				edges[edge_count].y = y;
@@ -211,16 +234,18 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 
 	shuffle_edges(edges, edge_count);
 
+	strcat(greeting, "\033[2J");
 	printk(KERN_INFO "\033[2J");
 
+	Edge current_edge;
 	while(edge_count > 0) {
 		edge_count--;
 
-		Edge current = edges[edge_count];
+		current_edge = edges[edge_count];
 
-		int x = current.x;
-		int y = current.y ;
-		int direction = current.direction;
+		int x = current_edge.x;
+		int y = current_edge.y ;
+		int direction = current_edge.direction;
 
 		int nx = x + dy(direction);
 		int ny = y + dy(direction);
@@ -229,19 +254,15 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 		Tree *set2 = &sets[ny][nx];
 
 		if(!connected(set1, set2) {
-			display_maze(grid);
+			strcat(greeting, display_maze(grid));
 			connect(set1, set2);
 			grid[y][x] |= direction;
 			grid[ny][nx] |= opposite(direction);
 		}
 	}
 
-	display_maze(grid);
+	strcat(greeting, display_maze(grid));
 
-	printk(KERN_INFO "%s %d %d\n", "maze", 5, 5);
-	printk(KERN_INFO "calling our very own custom read method.");
-
-	char greeting[] = "Raptor maze time!\n";
 	int greeting_length = strlen(greeting);
 
 	if(*offset > 0)
