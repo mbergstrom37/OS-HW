@@ -1,4 +1,4 @@
-kernel_module = open('/proc/helloworlddriver')
+kernel_module = open('/proc/raptormazedriver')
 
 greeting = kernel_module.readline();
 print(greeting)
