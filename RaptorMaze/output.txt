@@ -1,0 +1,186 @@
+Script started on Mon 07 Sep 2026 07:48:33 PM MDT
+osc@ubuntu:~/OS_HW/RaptorMaze$ maak[K[Kke
+make -C /lib/modules/4.4.0-210-generic/build M=/home/osc/OS_HW/RaptorMaze modules
+make[1]: Entering directory '/usr/src/linux-headers-4.4.0-210-generic'
+  CC [M]  /home/osc/OS_HW/RaptorMaze/dvt-driver.o
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:5:27:[m[K [01;35m[Kwarning: [m[Kextra tokens at end of #include directive
+ #include <linux/proc_fs.h><
+[01;32m[K                           ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:75:22:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+ void initialize_tree(Tree *tree)
+[01;32m[K                      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:80:1:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+ Tree *root(Tree *tree)
+[01;32m[K ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:80:12:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+ Tree *root(Tree *tree)
+[01;32m[K            ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:89:16:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+ bool connected(Tree *tree1, Tree *tree2)
+[01;32m[K                ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:89:29:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+ bool connected(Tree *tree1, Tree *tree2)
+[01;32m[K                             ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:94:14:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+ void connect(Tree *tree1, Tree *tree2)
+[01;32m[K              ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:94:27:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+ void connect(Tree *tree1, Tree *tree2)
+[01;32m[K                           ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kdisplay_maze[m[K’:
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:102:2:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function ‘[01m[Kprint[m[K’ [-Werror=implicit-function-declaration]
+  print(KERN_INFO " ");
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:104:2:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+  for(int i=0; i<5*2-1; i++) {
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:104:2:[m[K [01;36m[Knote: [m[Kuse option -std=c99, -std=gnu99, -std=c11 or -std=gnu11 to compile your code
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:110:2:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+  for(int y=0; y<5; y++) {
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:113:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+   for(int x=0; x<5; x++) {
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:141:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kelse[m[K’ without a previous ‘[01m[Kif[m[K’
+   else {
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:145:6:[m[K [01;31m[Kerror: [m[K‘[01m[Kcell[m[K’ undeclared (first use in this function)
+   if(cell == 0) {
+[01;32m[K      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:145:6:[m[K [01;36m[Knote: [m[Keach undeclared identifier is reported only once for each function it appears in
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K At top level:
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:153:20:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KEdge[m[K’
+ void shuffle_edges(Edge edges[], int count)
+[01;32m[K                    ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kcustom_read[m[K’:
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:172:2:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+  for(int y=0; y<5; y++) {
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:173:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+   for(int x=0; x<5; x++) {
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:178:2:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+  Tree sets[5][5];
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:178:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:180:10:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Ky[m[K’
+  for(int y=0; y<5; y++) {
+[01;32m[K          ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:172:10:[m[K [01;36m[Knote: [m[Kprevious definition of ‘[01m[Ky[m[K’ was here
+  for(int y=0; y<5; y++) {
+[01;32m[K          ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:180:2:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+  for(int y=0; y<5; y++) {
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:181:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+   for(int x=0; x<5; x++) {
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:182:4:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function ‘[01m[Kinitialize_tree[m[K’ [-Werror=implicit-function-declaration]
+    initialize_tree(&sets[y][x]);
+[01;32m[K    ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:186:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  int max_edges = (5 * (5-1)) + ((5-1) * 5);
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:188:2:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KEdge[m[K’
+  Edge edges[max_edges];
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:192:10:[m[K [01;31m[Kerror: [m[Kredefinition of ‘[01m[Ky[m[K’
+  for(int y=0; y<5; y++) {
+[01;32m[K          ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:180:10:[m[K [01;36m[Knote: [m[Kprevious definition of ‘[01m[Ky[m[K’ was here
+  for(int y=0; y<5; y++) {
+[01;32m[K          ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:192:2:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+  for(int y=0; y<5; y++) {
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:193:3:[m[K [01;31m[Kerror: [m[K‘[01m[Kfor[m[K’ loop initial declarations are only allowed in C99 or C11 mode
+   for(int x=0; x<0; x++) {
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:195:22:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Kx[m[K’ in something not a structure or union
+     edges[edge_count].x = x;
+[01;32m[K                      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:196:22:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Ky[m[K’ in something not a structure or union
+     edges[edge_count].y = y;
+[01;32m[K                      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:197:22:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Kdirection[m[K’ in something not a structure or union
+     edges[edge_count].direction = 1;
+[01;32m[K                      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:203:22:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Kx[m[K’ in something not a structure or union
+     edges[edge_count].x = x;
+[01;32m[K                      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:204:22:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Ky[m[K’ in something not a structure or union
+     edges[edge_count].y = y;
+[01;32m[K                      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:205:22:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Kdirection[m[K’ in something not a structure or union
+     edges[edge_count].direction = 8;
+[01;32m[K                      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:212:2:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function ‘[01m[Kshuffle_edges[m[K’ [-Werror=implicit-function-declaration]
+  shuffle_edges(edges, edge_count);
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:219:3:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KEdge[m[K’
+   Edge current = edges[edge_count];
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:219:3:[m[K [01;31m[Kerror: [m[Kfunction declaration isn’t a prototype [-Werror=strict-prototypes]
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:219:3:[m[K [01;31m[Kerror: [m[Kfunction ‘[01m[Kget_current[m[K’ is initialized like a variable
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:219:3:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:221:18:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Kx[m[K’ in something not a structure or union
+   int x = current.x;
+[01;32m[K                  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:222:18:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Ky[m[K’ in something not a structure or union
+   int y = current.y ;
+[01;32m[K                  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:223:26:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Kdirection[m[K’ in something not a structure or union
+   int direction = current.direction;
+[01;32m[K                          ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:228:3:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+   Tree *set1 = &sets[y][x];
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:229:3:[m[K [01;31m[Kerror: [m[Kunknown type name ‘[01m[KTree[m[K’
+   Tree *set2 = &sets[ny][nx];
+[01;32m[K   ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:231:7:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function ‘[01m[Kconnected[m[K’ [-Werror=implicit-function-declaration]
+   if(!connected(set1, set2) {
+[01;32m[K       ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:231:29:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K{[m[K’ token
+   if(!connected(set1, set2) {
+[01;32m[K                             ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:237:2:[m[K [01;31m[Kerror: [m[Kexpected expression before ‘[01m[K}[m[K’ token
+  }
+[01;32m[K  ^[m[K
+In file included from [01m[K./arch/x86/include/asm/processor.h:15:0[m[K,
+                 from [01m[K./arch/x86/include/asm/cpufeature.h:4[m[K,
+                 from [01m[K./arch/x86/include/asm/thread_info.h:52[m[K,
+                 from [01m[Kinclude/linux/thread_info.h:58[m[K,
+                 from [01m[K./arch/x86/include/asm/preempt.h:6[m[K,
+                 from [01m[Kinclude/linux/preempt.h:59[m[K,
+                 from [01m[Kinclude/linux/spinlock.h:50[m[K,
+                 from [01m[Kinclude/linux/seqlock.h:35[m[K,
+                 from [01m[Kinclude/linux/time.h:5[m[K,
+                 from [01m[Kinclude/linux/stat.h:18[m[K,
+                 from [01m[Kinclude/linux/module.h:10[m[K,
+                 from [01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:2[m[K:
+[01m[K./arch/x86/include/asm/current.h:17:17:[m[K [01;31m[Kerror: [m[Knested function ‘[01m[Kget_current[m[K’ declared but never defined
+ #define current get_current()
+[01;32m[K                 ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:219:8:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[Kcurrent[m[K’
+   Edge current = edges[edge_count];
+[01;32m[K        ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:244:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+  char greeting[] = "Raptor maze time!\n";
+[01;32m[K  ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kopposite[m[K’:
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:73:1:[m[K [01;35m[Kwarning: [m[Kcontrol reaches end of non-void function [-Wreturn-type]
+ }
+[01;32m[K ^[m[K
+cc1: some warnings being treated as errors
+scripts/Makefile.build:294: recipe for target '/home/osc/OS_HW/RaptorMaze/dvt-driver.o' failed
+make[2]: *** [/home/osc/OS_HW/RaptorMaze/dvt-driver.o] Error 1
+Makefile:1472: recipe for target '_module_/home/osc/OS_HW/RaptorMaze' failed
+make[1]: *** [_module_/home/osc/OS_HW/RaptorMaze] Error 2
+make[1]: Leaving directory '/usr/src/linux-headers-4.4.0-210-generic'
+Makefile:4: recipe for target 'all' failed
+make: *** [all] Error 2
+osc@ubuntu:~/OS_HW/RaptorMaze$ exit
+exit
+
+Script done on Mon 07 Sep 2026 07:48:41 PM MDT

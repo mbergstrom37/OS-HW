@@ -1,0 +1,1 @@
+cmd_/home/osc/OS_HW/RaptorMaze/dvt-driver.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/osc/OS_HW/RaptorMaze/dvt-driver.ko /home/osc/OS_HW/RaptorMaze/dvt-driver.o /home/osc/OS_HW/RaptorMaze/dvt-driver.mod.o
