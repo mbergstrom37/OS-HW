@@ -70,6 +70,8 @@ int opposite(int direction)
 			return 2;
 		case 2:
 			return 1;
+		default:
+			return 0;
 	}
 }
 
@@ -97,9 +99,8 @@ void connect(Tree *tree1, Tree *tree2)
 	root(tree2)->parent = tree1;
 }
 
-char* display_maze(int grid[5][5])
+void display_maze(int grid[5][5], char* greeting)
 {
-	char greeting[500] = "";
 	strcat(greeting, "\033[H");
 	printk(KERN_INFO "\033[H");
 	strcat(greeting, " ");
@@ -156,16 +157,14 @@ char* display_maze(int grid[5][5])
 				printk(KERN_INFO "|");
 			}
 
-		if(cell == 0) {
-			strcat(greeting, "\033[m");
-			printk(KERN_INFO "\033[m");
+			if(cell == 0) {
+				strcat(greeting, "\033[m");
+				printk(KERN_INFO "\033[m");
+			}
 		}
-	}
-
 	strcat(greeting, "\n");
 	printk(KERN_INFO "\n");
-
-	return greeting;
+	}
 }
 
 void shuffle_edges(Edge edges[], int count)
@@ -238,30 +237,33 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 	printk(KERN_INFO "\033[2J");
 
 	Edge current_edge;
+	int direction;
+	int nx;
+	int ny;
 	while(edge_count > 0) {
 		edge_count--;
 
 		current_edge = edges[edge_count];
 
-		int x = current_edge.x;
-		int y = current_edge.y ;
-		int direction = current_edge.direction;
+		x = current_edge.x;
+		y = current_edge.y;
+		direction = current_edge.direction;
 
-		int nx = x + dy(direction);
-		int ny = y + dy(direction);
+		nx = x + dx(direction);
+		ny = y + dy(direction);
 
 		Tree *set1 = &sets[y][x];
 		Tree *set2 = &sets[ny][nx];
 
-		if(!connected(set1, set2) {
-			strcat(greeting, display_maze(grid));
+		if(!connected(set1, set2)) {
+			display_maze(grid, greeting);
 			connect(set1, set2);
 			grid[y][x] |= direction;
 			grid[ny][nx] |= opposite(direction);
 		}
 	}
 
-	strcat(greeting, display_maze(grid));
+	display_maze(grid, greeting);
 
 	int greeting_length = strlen(greeting);
 
