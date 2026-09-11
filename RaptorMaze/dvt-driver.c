@@ -21,7 +21,15 @@ MODULE_DESCRIPTION("Raptor maze driver");
 MODULE_LICENSE("GPL");
 
 static struct proc_dir_entry* proc_entry;
-
+/*
+The maze algorithm was translated from Ruby to C with ChatGPT
+The kernel changes were made by me, with some bug fixing suggestions by ChatGPT
+*/
+/*
+Name: Michael Bergstrom
+Date: 9/11/2026
+Description: x direction
+*/
 int dx(int direction)
 {
 	switch (direction)
@@ -38,6 +46,11 @@ int dx(int direction)
 	return 0;
 }
 
+/*
+Name: Michael Bergstrom
+Date: 9/7/2026
+Description: y direction
+*/
 int dy(int direction)
 {
 	switch (direction)
@@ -54,6 +67,11 @@ int dy(int direction)
 	return 0;
 }
 
+/*
+Name: Michael Bergstrom
+Date: 9/7/2026
+Description: flip direction
+*/
 int opposite(int direction)
 {
 	switch (direction)
@@ -71,6 +89,11 @@ int opposite(int direction)
 	return 0;
 }
 
+/*
+Name: Michael Bergstrom
+Date: 9/7/2026
+Description: randomizing directions
+*/
 void shuffle(int directions[4])
 {
 	int i;
@@ -88,6 +111,11 @@ void shuffle(int directions[4])
 	}
 }
 
+/*
+Name: Michael Bergstrom
+Date: 9/11/2026
+Description: carving passages in maze
+*/
 //Iterative version of a recursive function made by ChatGPT
 void carve_passages_from(int start_x, int start_y, int grid[HEIGHT][WIDTH])
 {
@@ -165,10 +193,11 @@ void carve_passages_from(int start_x, int start_y, int grid[HEIGHT][WIDTH])
 	}
 }
 
-// --------------------------------------------------------------------
-// 4. Print the maze as ASCII
-// --------------------------------------------------------------------
-
+/*
+Name: Michael Bergstrom
+Date: 9/11/2026
+Description: make maze string
+*/
 void print_maze(int grid[HEIGHT][WIDTH], char *maze)
 {
 	int index = 0;
@@ -231,7 +260,7 @@ void print_maze(int grid[HEIGHT][WIDTH], char *maze)
 
 /*
 Name: Michael Bergstrom
-Date: 9/7/2026
+Date: 9/11/2026
 Description: custom read function
 */
 static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t count, loff_t* offset)
