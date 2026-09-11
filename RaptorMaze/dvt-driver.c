@@ -88,39 +88,78 @@ void shuffle(int directions[4])
 	}
 }
 
-void carve_passages_from(int cx, int cy, int grid[HEIGHT][WIDTH])
+//Iterative version of a recursive function made by ChatGPT
+void carve_passages_from(int start_x, int start_y, int grid[HEIGHT][WIDTH])
 {
-	int directions[4] = {N, S, E, W};
-	int i;
-	int direction;
-	int nx;
-	int ny;
+    // Each stack entry stores an x/y position
+    int stack_x[WIDTH * HEIGHT];
+    int stack_y[WIDTH * HEIGHT];
 
-	// Randomize direction order
-	shuffle(directions);
+    int top = 0;
 
-	for (i = 0; i < 4; i++)
-	{
-		direction = directions[i];
+    int directions[4];
+    int direction;
+    int nx;
+    int ny;
+    int i;
 
-		nx = cx + dx(direction);
-		ny = cy + dy(direction);
+    // Start at the initial cell
+    stack_x[top] = start_x;
+    stack_y[top] = start_y;
+    top++;
 
-		// Check that the new position is inside the maze
-		if (ny >= 0 && ny < HEIGHT &&
-			nx >= 0 && nx < WIDTH &&
-			grid[ny][nx] == 0)
-		{
-			// Create passage from current cell to next cell
-			grid[cy][cx] |= direction;
+    while (top > 0)
+    {
+        // Look at the cell on top of the stack
+        int cx = stack_x[top - 1];
+        int cy = stack_y[top - 1];
 
-			// Create the opposite passage from next cell
-			grid[ny][nx] |= opposite(direction);
+        // Create and shuffle directions
+        directions[0] = N;
+        directions[1] = S;
+        directions[2] = E;
+        directions[3] = W;
 
-			// Recursively continue carving
-			carve_passages_from(nx, ny, grid);
-		}
-	}
+        shuffle(directions);
+
+        // Look for an unvisited neighboring cell
+        int found = 0;
+
+        for (i = 0; i < 4; i++)
+        {
+            direction = directions[i];
+
+            nx = cx + dx(direction);
+            ny = cy + dy(direction);
+
+            // Check that the new position is inside the maze
+            if (ny >= 0 && ny < HEIGHT &&
+                nx >= 0 && nx < WIDTH &&
+                grid[ny][nx] == 0)
+            {
+                // Create passage from current cell
+                grid[cy][cx] |= direction;
+
+                // Create opposite passage in new cell
+                grid[ny][nx] |= opposite(direction);
+
+                // Push new cell onto stack
+                stack_x[top] = nx;
+                stack_y[top] = ny;
+                top++;
+
+                found = 1;
+                break;
+            }
+        }
+
+        // No unvisited neighbors:
+        // remove this cell from the stack
+        if (!found)
+        {
+            top--;
+        }
+    }
 }
 
 // --------------------------------------------------------------------
@@ -199,6 +238,9 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 	char maze[75];
 	int maze_length;
 
+	if(*offset > 0)
+		return 0;
+
 	// Generate maze starting at (0, 0)
 	carve_passages_from(0, 0, grid);
 
@@ -207,13 +249,14 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 
 	maze_length = strlen(maze);
 
-	if(*offset > 0)
-		return 0;
+	if(count < maze_length)
+		maze_length = count;
 
-	copy_to_user(user_buffer, maze, maze_length);
+	if(copy_to_user(user_buffer, maze, maze_length) != 0)
+		return -EFAULT;
+
 	*offset = maze_length;
 
-    //hi
 	return maze_length;
 }
 
