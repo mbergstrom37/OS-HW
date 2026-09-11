@@ -7,6 +7,14 @@
 #include <linux/random.h>
 #include <linux/string.h>
 
+#define WIDTH  5
+#define HEIGHT 5
+
+#define N 1
+#define S 2
+#define E 4
+#define W 8
+
 //Module metadata
 MODULE_AUTHOR("Michael Bergstrom");
 MODULE_DESCRIPTION("Raptor maze driver");
@@ -14,172 +22,170 @@ MODULE_LICENSE("GPL");
 
 static struct proc_dir_entry* proc_entry;
 
-/*
-Note: I transalted the Ruby code from the Kruskal's algorithm site given to C with ChatGPT,
-      but converted the code myself into kernel code.
-*/
-typedef struct Edge {
-	int x;
-	int y;
-	int direction;
-} Edge;
-
-typedef struct Tree {
-	struct Tree *parent;
-} Tree;
-
-//1 is north, 2 is south, 4 is east, and 8 is west
 int dx(int direction)
 {
-	switch(direction) {
-		case 4:
-			return 1;
-		case 8:
-			return -1;
-		case 1:
-		case 2:
-			return 0;
-		default:
-			return 0;
-	}
+    switch (direction)
+    {
+        case E:
+            return 1;
+        case W:
+            return -1;
+        case N:
+        case S:
+            return 0;
+    }
+
+    return 0;
 }
 
 int dy(int direction)
 {
-	switch(direction) {
-		case 4:
-		case 8:
-			return 0;
-		case 1:
-			return -1;
-		case 2:
-			return 1;
-		default:
-			return 0;
-	}
+    switch (direction)
+    {
+        case E:
+        case W:
+            return 0;
+        case N:
+            return -1;
+        case S:
+            return 1;
+    }
+
+    return 0;
 }
 
 int opposite(int direction)
 {
-	switch(direction) {
-		case 4:
-			return 8;
-		case 8:
-			return 4;
-		case 1:
-			return 2;
-		case 2:
-			return 1;
-		default:
-			return 0;
-	}
+    switch (direction)
+    {
+        case E:
+            return W;
+        case W:
+            return E;
+        case N:
+            return S;
+        case S:
+            return N;
+    }
+
+    return 0;
 }
 
-void initialize_tree(Tree *tree)
+void shuffle(int directions[4])
 {
-	tree->parent = NULL;
+    int i;
+    int j;
+    int temp;
+    
+    for (i = 3; i > 0; i--)
+    {
+        j = get_random_u32() % (i + 1);
+
+        temp = directions[i];
+        directions[i] = directions[j];
+        directions[j] = temp;
+    }
 }
 
-Tree *root(Tree *tree)
+void carve_passages_from(int cx, int cy, int grid[HEIGHT][WIDTH])
 {
-	if(tree->parent != NULL) {
-		return root(tree->parent);
-	}
+    int directions[4] = {N, S, E, W};
+    int i;
+    int direction;
+    int nx;
+    int ny;
 
-	return tree;
+    // Randomize direction order
+    shuffle(directions);
+
+    for (i = 0; i < 4; i++)
+    {
+        direction = directions[i];
+
+        nx = cx + dx(direction);
+        ny = cy + dy(direction);
+
+        // Check that the new position is inside the maze
+        if (ny >= 0 && ny < HEIGHT &&
+            nx >= 0 && nx < WIDTH &&
+            grid[ny][nx] == 0)
+        {
+            // Create passage from current cell to next cell
+            grid[cy][cx] |= direction;
+
+            // Create the opposite passage from next cell
+            grid[ny][nx] |= opposite(direction);
+
+            // Recursively continue carving
+            carve_passages_from(nx, ny, grid);
+        }
+    }
 }
 
-bool connected(Tree *tree1, Tree *tree2)
+// --------------------------------------------------------------------
+// 4. Print the maze as ASCII
+// --------------------------------------------------------------------
+
+void print_maze(int grid[HEIGHT][WIDTH], char *maze)
 {
-	return root(tree1) == root(tree2);
+    int index = 0;
+    int i;
+    int y;
+    int x;
+
+    // Top border
+    maze[index++] = ' ';
+
+    for (i = 0; i < WIDTH * 2 - 1; i++)
+    {
+        maze[index++] = '_';
+    }
+
+    maze[index++] = '\n';
+
+    // Each row
+    for (y = 0; y < HEIGHT; y++)
+    {
+        maze[index++] = '|';
+
+        for (x = 0; x < WIDTH; x++)
+        {
+            // Bottom wall or passage
+            if ((grid[y][x] & S) != 0)
+            {
+                maze[index++] = ' ';
+            }
+            else
+            {
+                maze[index++] = '_';
+            }
+
+            // Right wall or passage
+            if ((grid[y][x] & E) != 0)
+            {
+                if (x + 1 < WIDTH &&
+                    ((grid[y][x] | grid[y][x + 1]) & S) != 0)
+                {
+                    maze[index++] = ' ';
+                }
+                else
+                {
+                    maze[index++] = '_';
+                }
+            }
+            else
+            {
+                maze[index++] = '|';
+            }
+        }
+
+        maze[index++] = '\n';
+    }
+
+    // Null terminator
+    maze[index] = '\0';
 }
 
-void connect(Tree *tree1, Tree *tree2)
-{
-	root(tree2)->parent = tree1;
-}
-
-void display_maze(int grid[5][5], char* greeting)
-{
-	strcat(greeting, "\033[H");
-	printk(KERN_INFO "\033[H");
-	strcat(greeting, " ");
-	printk(KERN_INFO " ");
-	int i;
-	for(i=0; i<5*2-1; i++) {
-		strcat(greeting, "_");
-		printk(KERN_INFO "_");
-	}
-
-	strcat(greeting, "\n");
-	printk(KERN_INFO "\n");
-	int y;
-	int x;
-	for(y=0; y<5; y++) {
-		strcat(greeting, "|");
-		printk(KERN_INFO "|");
-
-		for(x=0; x<5; x++) {
-			int cell = grid[y][x];
-
-			if(cell == 0) {
-				strcat(greeting, "\033[47m");
-				printk(KERN_INFO "\033[47m");
-			}
-
-			if((cell & 2) != 0) {
-				strcat(greeting, " ");
-				printk(KERN_INFO " ");
-			}
-			else {
-				strcat(greeting, "_");
-				printk(KERN_INFO "_");
-			}
-
-			if((cell & 4) != 0) {
-				if(x+1 < 5) {
-					if(((cell | grid[y][x+1]) & 2) != 0) {
-						strcat(greeting, " ");
-						printk(KERN_INFO " ");
-					}
-					else {
-						strcat(greeting, "_");
-						printk(KERN_INFO "_");
-					}
-				}
-				else {
-					strcat(greeting, " ");
-					printk(KERN_INFO " ");
-				}
-			}
-			else {
-				strcat(greeting, "|");
-				printk(KERN_INFO "|");
-			}
-
-			if(cell == 0) {
-				strcat(greeting, "\033[m");
-				printk(KERN_INFO "\033[m");
-			}
-		}
-	strcat(greeting, "\n");
-	printk(KERN_INFO "\n");
-	}
-}
-
-void shuffle_edges(Edge edges[], int count)
-{
-	int i;
-	int j;
-	Edge temp;
-	for(i = count-1; i>0; i--) {
-		int j = get_random_u32() % (i + 1);
-
-		Edge temp = edges[i];
-		edges[i] = edges[j];
-		edges[j] = temp;
-	}
-}
 /*
 Name: Michael Bergstrom
 Date: 9/7/2026
@@ -187,93 +193,27 @@ Description: custom read function
 */
 static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t count, loff_t* offset)
 {
-	char greeting[500];
-	int grid[5][5];
-	Tree sets[5][5];
+	// Create and initialize the maze
+    int grid[HEIGHT][WIDTH] = {0};
 
-	int y;
-	int x;
-	for(y=0; y<5; y++) {
-		for(x=0; x<5; x++) {
-			grid[y][x] = 0;
-		}
-	}
+    // Generate maze starting at (0, 0)
+    carve_passages_from(0, 0, grid);
 
-	for(y=0; y<5; y++) {
-		for(x=0; x<5; x++) {
-			initialize_tree(&sets[y][x]);
-		}
-	}
+    // String Container
+    char maze[75];
+    
+    // Print maze
+    print_maze(grid, maze);
 
-	int max_edges = (5 * (5-1)) + ((5-1) * 5);
-
-	Edge edges[max_edges];
-
-	int edge_count = 0;
-
-	for(y=0; y<5; y++) {
-		for(x=0; x<0; x++) {
-			if(y>0) {
-				edges[edge_count].x = x;
-				edges[edge_count].y = y;
-				edges[edge_count].direction = 1;
-
-				edge_count++;
-			}
-
-			if(x>0) {
-				edges[edge_count].x = x;
-				edges[edge_count].y = y;
-				edges[edge_count].direction = 8;
-
-				edge_count++;
-			}
-		}
-	}
-
-	shuffle_edges(edges, edge_count);
-
-	strcat(greeting, "\033[2J");
-	printk(KERN_INFO "\033[2J");
-
-	Edge current_edge;
-	int direction;
-	int nx;
-	int ny;
-	while(edge_count > 0) {
-		edge_count--;
-
-		current_edge = edges[edge_count];
-
-		x = current_edge.x;
-		y = current_edge.y;
-		direction = current_edge.direction;
-
-		nx = x + dx(direction);
-		ny = y + dy(direction);
-
-		Tree *set1 = &sets[y][x];
-		Tree *set2 = &sets[ny][nx];
-
-		if(!connected(set1, set2)) {
-			display_maze(grid, greeting);
-			connect(set1, set2);
-			grid[y][x] |= direction;
-			grid[ny][nx] |= opposite(direction);
-		}
-	}
-
-	display_maze(grid, greeting);
-
-	int greeting_length = strlen(greeting);
+	int maze_length = strlen(maze);
 
 	if(*offset > 0)
 		return 0;
 
-	copy_to_user(user_buffer, greeting, greeting_length);
-	*offset = greeting_length;
+	copy_to_user(user_buffer, maze, maze_length);
+	*offset = maze_length;
 
-	return greeting_length;
+	return maze_length;
 }
 
 /*
