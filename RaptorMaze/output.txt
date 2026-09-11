@@ -1,37 +1,18 @@
-Script started on Mon 07 Sep 2026 09:21:44 PM MDT
+Script started on Thu 10 Sep 2026 08:45:12 PM MDT
 osc@ubuntu:~/OS_HW/RaptorMaze$ make
 make -C /lib/modules/4.4.0-210-generic/build M=/home/osc/OS_HW/RaptorMaze modules
 make[1]: Entering directory '/usr/src/linux-headers-4.4.0-210-generic'
   CC [M]  /home/osc/OS_HW/RaptorMaze/dvt-driver.o
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kdisplay_maze[m[K’:
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:108:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-  int i;
-[01;32m[K  ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:116:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-  int y;
-[01;32m[K  ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kshuffle_edges[m[K’:
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:176:11:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function ‘[01m[Kget_random_u32[m[K’ [-Werror=implicit-function-declaration]
-   int j = get_random_u32() % (i + 1);
-[01;32m[K           ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:174:7:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Ktemp[m[K’ [-Wunused-variable]
-  Edge temp;
-[01;32m[K       ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:173:6:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kj[m[K’ [-Wunused-variable]
-  int j;
-[01;32m[K      ^[m[K
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kshuffle[m[K’:
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:82:13:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function ‘[01m[Kget_random_u32[m[K’ [-Werror=implicit-function-declaration]
+         j = get_random_u32() % (i + 1);
+[01;32m[K             ^[m[K
 [01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kcustom_read[m[K’:
+[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:203:5:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+     char maze[75];
+[01;32m[K     ^[m[K
 [01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:208:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-  int max_edges = (5 * (5-1)) + ((5-1) * 5);
-[01;32m[K  ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:239:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-  Edge current_edge;
-[01;32m[K  ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:255:3:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-   Tree *set1 = &sets[y][x];
-[01;32m[K   ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:268:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-  int greeting_length = strlen(greeting);
+  int maze_length = strlen(maze);
 [01;32m[K  ^[m[K
 cc1: some warnings being treated as errors
 scripts/Makefile.build:294: recipe for target '/home/osc/OS_HW/RaptorMaze/dvt-driver.o' failed
@@ -44,4 +25,4 @@ make: *** [all] Error 2
 osc@ubuntu:~/OS_HW/RaptorMaze$ exit
 exit
 
-Script done on Mon 07 Sep 2026 09:21:48 PM MDT
+Script done on Thu 10 Sep 2026 08:45:19 PM MDT
