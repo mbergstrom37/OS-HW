@@ -1,36 +1,31 @@
-Script started on Thu 10 Sep 2026 09:30:34 PM MDT
-osc@ubuntu:~/OS_HW/RaptorMaze$ exitpython3 hello.pyexit[Kpython3 hello.pyexit[Klsmod[1Pexitmakeexitmakeexitmakeexitlsmod[1Pexitdmesg[1Pexitdmesglsmod[1Pexit[2Plsvi READMEls[Kvi READMEls[Kvi READMEls[Kvi READMEls[Kexitlsmoddmesg[1Pexitdmesg[1Pexitlsmod[1Pexitmakeexitmakeexitmakeexitlsmod[1Pexitpython3 hello.pyexit[Kpython3 hello.pyexit[K[Kexitpython3 hello.pyexit[Kpython3 hello.pyexit[Klsmod[1Pexitmakeexitmakeexitmakeexitlsmod[1Pexitdmesg[1Pexitdmesglsmod[1Pexit[2Plsvi READMEls[Kvi READMEls[Krm hw1.ols[Krm hw1.cls[Krm a.outls[Kvi hw1.cls[Kexitsudo vi /etc/motd[9Pvi hw1.csudo vi /etc/motd[3P/etc/motdexit[Ksudo vi /etc/motdexit[Kman wget[4Pwgetvi hw1.cls[Kexitls -lvi update-motd.d/ls[K -l | more[K motd[Kcd /etcat /etc/motd.tail[Kexit[Ksudo vi /etc/otd.tail[1Papt-get upgrade[1Pdateexit[Ksudo apt-get upgrade[1Pdateexit[Kls -l /etc | more[Kvi /etc/motd[4Pcat motd[1@echo[C[C[C[C[Csudo ./runqlatls[Kcd toolsls[Kcd ..[3Plscd ..[3Plscd ..[3Plscd toolsls[Ksudo ./runqlat[5Pecho motd[1Pcat[C[C[C[C[Cvi /etc/motd[2Pls -l /etc | moreexit[Ksudo apt-get updategradeexit[Ksudo apt-get updategradevi /etc/otd.tailexit[Kcat /etc/motd.tail[11Pd /etcls[K -l motd[K | more[Kvi update-motd.d/ls -l[K[1Pexit[2Plsvi hw1.c[4Pwgetman wget[4Pexitsudo vi /etc/motdexit[Ksudo /etc/motdvi /etc/motd[9Pvi hw1.csudo vi /etc/motdexit[K[2Plsvi hw1.cls[Krm a.outls[Krm hw1.cls[Krm hw1.ols[Kvi READMEls[Kvi READMEls[Kexitlsmoddmesg[1Pexitdmesg[1Pexitlsmod[1Pexitmakeexitmakeexitmakeexitlsmod[1Pexitpython3 hello.pyexit[Kpython3 hello.pyexit[K[Kdmesg | tail -30
-[ 2362.899999] RBP: ffff88002ad57af8 R08: ffffffff821e2348 R09: ffff88002ad579fe
-[ 2362.900000] R10: 000000000000001f R11: 0000000000000007 R12: ffff88002ad57dc8
-[ 2362.900000] R13: 0000000000000002 R14: 0000000000000004 R15: ffff88002ad57ac8
-[ 2362.900001] FS:  00007f75b2c62700(0000) GS:ffff88002fc00000(0000) knlGS:0000000000000000
-[ 2362.900002] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 2362.900003] CR2: 00000008c056f14b CR3: 0000000025620000 CR4: 00000000000606f0
-[ 2362.900006] Stack:
-[ 2362.900007]  ffff88002ad57b10 0000000200000004 ffffffff00000001 cd87c32c8759725b
-[ 2362.900008]  ffff88002ad57b10 ffff88002ad57dc8 0000000000000002 0000000000000003
-[ 2362.900009]  ffff88002ad57b20 ffff88002ad57b50 ffffffffc056f1cb ffff88002ad57e0c
-[ 2362.900010] Call Trace:
-[ 2362.900014]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900015]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900017]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900018]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900019]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900020]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900021]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900022]  [<ffffffffc056f1cb>] carve_passages_from+0xdb/0x120 [dvt_driver]
-[ 2362.900023]  [<ffffffffc056f32f>] custom_read+0x4f/0xaf [dvt_driver]
-[ 2362.900029]  [<ffffffff8128b4c5>] proc_reg_read+0x45/0x70
-[ 2362.900033]  [<ffffffff8121c27b>] __vfs_read+0x1b/0x40
-[ 2362.900034]  [<ffffffff8121c9f6>] vfs_read+0x86/0x130
-[ 2362.900036]  [<ffffffff8121d74c>] SyS_read+0x5c/0xe0
-[ 2362.900039]  [<ffffffff8186bb5b>] entry_SYSCALL_64_fastpath+0x22/0xd0
-[ 2362.900040] Code:  Bad RIP value.
-[ 2362.900041] RIP  [<00000008c056f14b>] 0x8c056f14b
-[ 2362.900041]  RSP <ffff88002ad57ab0>
-[ 2362.900042] CR2: 00000008c056f14b
-[ 2362.900044] ---[ end trace c8aee7a941d3008c ]---
-osc@ubuntu:~/OS_HW/RaptorMaze$ exit
+Script started on Thu 10 Sep 2026 11:27:59 PM MDT
+osc@ubuntu:~/OS_HWv2/OS-HW/RaptorMaze$ make
+make -C /lib/modules/4.4.0-210-generic/build M=/home/osc/OS_HWv2/OS-HW/RaptorMaze modules
+make[1]: Entering directory '/usr/src/linux-headers-4.4.0-210-generic'
+  CC [M]  /home/osc/OS_HWv2/OS-HW/RaptorMaze/dvt-driver.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /home/osc/OS_HWv2/OS-HW/RaptorMaze/dvt-driver.mod.o
+  LD [M]  /home/osc/OS_HWv2/OS-HW/RaptorMaze/dvt-driver.ko
+make[1]: Leaving directory '/usr/src/linux-headers-4.4.0-210-generic'
+osc@ubuntu:~/OS_HWv2/OS-HW/RaptorMaze$ sudo insmod dvt-dv[Kriver.o[Kko
+[sudo] password for osc: 
+osc@ubuntu:~/OS_HWv2/OS-HW/RaptorMaze$ pythio[K[K[K[K[K[Kpython3 hello.py
+ _________
+|_  |___  |
+| |_____  |
+|  _  |  _|
+| | |___| |
+|_________|
+
+osc@ubuntu:~/OS_HWv2/OS-HW/RaptorMaze$ rmmod[K[K[K[K[Ksudo rmmod dvt_driver
+osc@ubuntu:~/OS_HWv2/OS-HW/RaptorMaze$ make clean
+make -C /lib/modules/4.4.0-210-generic/build M=/home/osc/OS_HWv2/OS-HW/RaptorMaze clean
+make[1]: Entering directory '/usr/src/linux-headers-4.4.0-210-generic'
+  CLEAN   /home/osc/OS_HWv2/OS-HW/RaptorMaze/.tmp_versions
+  CLEAN   /home/osc/OS_HWv2/OS-HW/RaptorMaze/Module.symvers
+make[1]: Leaving directory '/usr/src/linux-headers-4.4.0-210-generic'
+osc@ubuntu:~/OS_HWv2/OS-HW/RaptorMaze$ exit
 exit
 
-Script done on Thu 10 Sep 2026 09:31:03 PM MDT
+Script done on Thu 10 Sep 2026 11:29:17 PM MDT

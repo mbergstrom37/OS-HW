@@ -74,7 +74,7 @@ int opposite(int direction)
 void shuffle(int directions[4])
 {
 	int i;
-	int j;
+	unsigned int j;
 	int temp;
 	
 	for (i = 3; i > 0; i--)
@@ -91,75 +91,78 @@ void shuffle(int directions[4])
 //Iterative version of a recursive function made by ChatGPT
 void carve_passages_from(int start_x, int start_y, int grid[HEIGHT][WIDTH])
 {
-    // Each stack entry stores an x/y position
-    int stack_x[WIDTH * HEIGHT];
-    int stack_y[WIDTH * HEIGHT];
+	// Each stack entry stores an x/y position
+	int stack_x[WIDTH * HEIGHT];
+	int stack_y[WIDTH * HEIGHT];
 
-    int top = 0;
+	int top = 0;
 
-    int directions[4];
-    int direction;
-    int nx;
-    int ny;
-    int i;
+	int directions[4];
+	int direction;
+	int nx;
+	int ny;
+	int i;
+	int cx;
+	int cy;
+	int found;
 
-    // Start at the initial cell
-    stack_x[top] = start_x;
-    stack_y[top] = start_y;
-    top++;
+	// Start at the initial cell
+	stack_x[top] = start_x;
+	stack_y[top] = start_y;
+	top++;
 
-    while (top > 0)
-    {
-        // Look at the cell on top of the stack
-        int cx = stack_x[top - 1];
-        int cy = stack_y[top - 1];
+	while (top > 0)
+	{
+		// Look at the cell on top of the stack
+		cx = stack_x[top - 1];
+		cy = stack_y[top - 1];
 
-        // Create and shuffle directions
-        directions[0] = N;
-        directions[1] = S;
-        directions[2] = E;
-        directions[3] = W;
+		// Create and shuffle directions
+		directions[0] = N;
+		directions[1] = S;
+		directions[2] = E;
+		directions[3] = W;
 
-        shuffle(directions);
+		shuffle(directions);
 
-        // Look for an unvisited neighboring cell
-        int found = 0;
+		// Look for an unvisited neighboring cell
+		found = 0;
 
-        for (i = 0; i < 4; i++)
-        {
-            direction = directions[i];
+		for (i = 0; i < 4; i++)
+		{
+			direction = directions[i];
 
-            nx = cx + dx(direction);
-            ny = cy + dy(direction);
+			nx = cx + dx(direction);
+			ny = cy + dy(direction);
 
-            // Check that the new position is inside the maze
-            if (ny >= 0 && ny < HEIGHT &&
-                nx >= 0 && nx < WIDTH &&
-                grid[ny][nx] == 0)
-            {
-                // Create passage from current cell
-                grid[cy][cx] |= direction;
+			// Check that the new position is inside the maze
+			if (ny >= 0 && ny < HEIGHT &&
+				nx >= 0 && nx < WIDTH &&
+				grid[ny][nx] == 0)
+			{
+				// Create passage from current cell
+				grid[cy][cx] |= direction;
 
-                // Create opposite passage in new cell
-                grid[ny][nx] |= opposite(direction);
+				// Create opposite passage in new cell
+				grid[ny][nx] |= opposite(direction);
 
-                // Push new cell onto stack
-                stack_x[top] = nx;
-                stack_y[top] = ny;
-                top++;
+				// Push new cell onto stack
+				stack_x[top] = nx;
+				stack_y[top] = ny;
+				top++;
 
-                found = 1;
-                break;
-            }
-        }
+				found = 1;
+				break;
+			}
+		}
 
-        // No unvisited neighbors:
-        // remove this cell from the stack
-        if (!found)
-        {
-            top--;
-        }
-    }
+		// No unvisited neighbors:
+		// remove this cell from the stack
+		if (!found)
+		{
+			top--;
+		}
+	}
 }
 
 // --------------------------------------------------------------------
