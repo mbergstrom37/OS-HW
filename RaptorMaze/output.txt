@@ -1,28 +1,7 @@
-Script started on Thu 10 Sep 2026 08:45:12 PM MDT
-osc@ubuntu:~/OS_HW/RaptorMaze$ make
-make -C /lib/modules/4.4.0-210-generic/build M=/home/osc/OS_HW/RaptorMaze modules
-make[1]: Entering directory '/usr/src/linux-headers-4.4.0-210-generic'
-  CC [M]  /home/osc/OS_HW/RaptorMaze/dvt-driver.o
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kshuffle[m[K’:
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:82:13:[m[K [01;31m[Kerror: [m[Kimplicit declaration of function ‘[01m[Kget_random_u32[m[K’ [-Werror=implicit-function-declaration]
-         j = get_random_u32() % (i + 1);
-[01;32m[K             ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:[m[K In function ‘[01m[Kcustom_read[m[K’:
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:203:5:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-     char maze[75];
-[01;32m[K     ^[m[K
-[01m[K/home/osc/OS_HW/RaptorMaze/dvt-driver.c:208:2:[m[K [01;35m[Kwarning: [m[KISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-  int maze_length = strlen(maze);
-[01;32m[K  ^[m[K
-cc1: some warnings being treated as errors
-scripts/Makefile.build:294: recipe for target '/home/osc/OS_HW/RaptorMaze/dvt-driver.o' failed
-make[2]: *** [/home/osc/OS_HW/RaptorMaze/dvt-driver.o] Error 1
-Makefile:1472: recipe for target '_module_/home/osc/OS_HW/RaptorMaze' failed
-make[1]: *** [_module_/home/osc/OS_HW/RaptorMaze] Error 2
-make[1]: Leaving directory '/usr/src/linux-headers-4.4.0-210-generic'
-Makefile:4: recipe for target 'all' failed
-make: *** [all] Error 2
-osc@ubuntu:~/OS_HW/RaptorMaze$ exit
+Script started on Thu 10 Sep 2026 09:18:28 PM MDT
+osc@ubuntu:~/OS_HW/RaptorMaze$ hell[K[K[K[Kpython3 hello.py
+Killed
+osc@ubuntu:~/OS_HW/RaptorMaze$ s[Kexit
 exit
 
-Script done on Thu 10 Sep 2026 08:45:19 PM MDT
+Script done on Thu 10 Sep 2026 09:18:42 PM MDT

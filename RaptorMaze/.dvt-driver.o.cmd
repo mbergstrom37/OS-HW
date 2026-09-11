@@ -798,6 +798,14 @@ deps_/home/osc/OS_HW/RaptorMaze/dvt-driver.o := \
   arch/x86/include/uapi/asm/fcntl.h \
   include/uapi/asm-generic/fcntl.h \
   include/linux/proc_fs.h \
+  include/linux/random.h \
+    $(wildcard include/config/arch/random.h) \
+  include/linux/once.h \
+  include/uapi/linux/random.h \
+  include/linux/irqnr.h \
+  include/uapi/linux/irqnr.h \
+  include/linux/prandom.h \
+  arch/x86/include/asm/archrandom.h \
 
 /home/osc/OS_HW/RaptorMaze/dvt-driver.o: $(deps_/home/osc/OS_HW/RaptorMaze/dvt-driver.o)
 
