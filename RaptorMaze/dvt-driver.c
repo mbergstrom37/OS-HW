@@ -199,6 +199,9 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 	char maze[75];
 	int maze_length;
 
+	if(*offset > 0)
+		return 0;
+
 	// Generate maze starting at (0, 0)
 	carve_passages_from(0, 0, grid);
 
@@ -207,13 +210,14 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 
 	maze_length = strlen(maze);
 
-	if(*offset > 0)
-		return 0;
+	if(count < maze_length)
+		maze_length = count;
 
-	copy_to_user(user_buffer, maze, maze_length);
+	if(copy_to_user(user_buffer, maze, maze_length) != 0)
+		return -EFAULT;
+
 	*offset = maze_length;
 
-    //hi
 	return maze_length;
 }
 
