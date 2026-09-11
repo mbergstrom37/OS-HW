@@ -213,6 +213,7 @@ static ssize_t custom_read(struct file* file, char __user* user_buffer, size_t c
 	copy_to_user(user_buffer, maze, maze_length);
 	*offset = maze_length;
 
+    //hi
 	return maze_length;
 }
 
