@@ -35,6 +35,9 @@ int main()
 		wgetnstr(stdscr, command_str, buffer_size);
 		attroff(COLOR_PAIR(2));
 		char *command = strtok(command_str, " \n");
+		if(command == NULL) {
+			continue;
+		}
 		if(strcmp(command, "exit") == 0) {
 			break;
 		}
@@ -88,13 +91,12 @@ int main()
 			}
 		}
 		else {
+			printw("---------------------------------Starting program---------------------------------\n");
 			wait(NULL);
-			printw("Child Complete\n");
+			printw("-----------------------------------Program Ended-----------------------------------\n");
 		}
 	}
-	refresh();
 	noecho();
-	getch();
 	endwin();
 	return 0;
 }
