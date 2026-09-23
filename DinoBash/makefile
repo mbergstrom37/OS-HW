@@ -4,7 +4,7 @@ CFLAGS = -Wno-implicit-function-declaration
 all: dinobash
 
 dinobash: DinoBash.o
-	$(CC) $(CFLAGS) DinoBash.o -o dinobash
+	$(CC) $(CFLAGS) DinoBash.o -o dinobash -lncurses
 
 DinoBash.o: DinoBash.c
 	$(CC) $(CFLAGS) -c DinoBash.c

@@ -4,18 +4,36 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <curses.h>
+
+char *motd() {
+	return "Welcome to Dino Bash!\n";
+}
 
 int main()
 {
-	printf("Welcome to Dino Bash\n");
+	initscr();
+	start_color();
+	init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	init_pair(2, COLOR_CYAN, COLOR_BLACK);
+
+	char *welcome = motd();
+	attron(COLOR_PAIR(1));
+	printw("%s\n", welcome);
+	attroff(COLOR_PAIR(1));
+
 	int buffer_size = 100;
 	int max_arg_amount = 2;
 	char command_args[max_arg_amount][buffer_size];
 	char command_str[buffer_size];
 	while(1) {
+		memset(command_args, 0, sizeof(command_args));
 		char *cwd = getcwd(NULL, 0);
-		printf("%s$ ", cwd);
-		fgets(command_str, buffer_size, stdin);
+		printw("%s$ ", cwd);
+		echo();
+		attron(COLOR_PAIR(2));
+		wgetnstr(stdscr, command_str, buffer_size);
+		attroff(COLOR_PAIR(2));
 		char *command = strtok(command_str, " \n");
 		if(strcmp(command, "exit") == 0) {
 			break;
@@ -38,15 +56,15 @@ int main()
 			if(command_args[0][0] == '\0') {
 				char *home_dir = getenv("HOME");
 				if(home_dir == NULL) {
-					fprintf(stderr, "Error: HOME environment variable is not set.\n");
+					printw("Error: HOME environment variable is not set.\n");
 				}
 				else if(chdir(home_dir) != 0) {
-					fprintf(stderr, "Failed to change to home directory.\n");
+					printw("Failed to change to home directory.\n");
 				}
 			}
 			else {
 				if(chdir(command_args[0]) != 0) {
-					fprintf(stderr, "Directory %s cannot be found.\n", command_args[0]);
+					printw("Directory %s cannot be found.\n", command_args[0]);
 				}
 			}
 
@@ -55,7 +73,7 @@ int main()
 		pid_t pid;
 		pid = fork();
 		if(pid < 0) {
-			fprintf(stderr, "Fork Failed.\nClosing DinoBash.");
+			printw("Fork Failed.\nClosing DinoBash.");
 			return 1;
 		}
 		else if(pid == 0) {
@@ -71,9 +89,12 @@ int main()
 		}
 		else {
 			wait(NULL);
-			printf("Child Complete\n");
+			printw("Child Complete\n");
 		}
 	}
-
+	refresh();
+	noecho();
+	getch();
+	endwin();
 	return 0;
 }
