@@ -1,0 +1,13 @@
+Script started on Tue 22 Sep 2026 09:30:09 PM MDT
+osc@ubuntu:~/OS_HWv2/OS-HW/DinoBash$ make
+gcc -Wno-implicit-function-declaration -c DinoBash.c
+[01m[KDinoBash.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[KDinoBash.c:59:3:[m[K [01;31m[Kerror: [m[Kvariable-sized object may not be initialized
+   char route[buffer_size] = "/bin/";
+[01;32m[K   ^[m[K
+makefile:10: recipe for target 'DinoBash.o' failed
+make: *** [DinoBash.o] Error 1
+osc@ubuntu:~/OS_HWv2/OS-HW/DinoBash$ exit
+exit
+
+Script done on Tue 22 Sep 2026 09:30:14 PM MDT
