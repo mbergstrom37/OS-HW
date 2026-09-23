@@ -19,7 +19,7 @@ int main()
 
 	char *welcome = motd();
 	attron(COLOR_PAIR(1));
-	printw("%s\n", welcome);
+	printw("%s", welcome);
 	attroff(COLOR_PAIR(1));
 
 	int buffer_size = 100;
@@ -80,6 +80,7 @@ int main()
 			return 1;
 		}
 		else if(pid == 0) {
+			endwin();
 			if(arg_count == 0) {
 				execlp(route,command,NULL);
 			}
@@ -91,7 +92,8 @@ int main()
 			}
 		}
 		else {
-			printw("---------------------------------Starting program---------------------------------\n");
+			move(getcury(stdscr) + 1, 0);
+			printw("----------------------------------Starting program---------------------------------\n");
 			wait(NULL);
 			printw("-----------------------------------Program Ended-----------------------------------\n");
 		}
