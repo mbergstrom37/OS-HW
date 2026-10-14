@@ -29,6 +29,6 @@ void *threadP(void *param) {
 
 		sleep(rand()%3);
 		count++;
-	while(msg[count] != '\0');
+	} while(msg[count] != '\0');
 	pthread_exit(0);
 }
