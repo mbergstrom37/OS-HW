@@ -65,6 +65,12 @@ static void* client_handler(void* arg)
                 send_int(fd, RESULT_CONTINUE);
             }
         }
+
+        // Game over (win or lose): reveal all 3 secret numbers
+        for (int r = 0; r < ROUNDS; r++) {
+            if (send_int(fd, secret[r]) < 0)
+                goto disconnect;
+        }
  
         // Ask client whether to play again (1 = yes, 0 = no)
         int32_t again;

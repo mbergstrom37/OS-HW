@@ -84,6 +84,18 @@ int main(void)
             else
                 printf("Wow! Nice turn to avoid that line! On to the next round.\n");
         }
+
+        // Server reveals all 3 secret numbers once the game is over
+        int32_t secret[ROUNDS];
+        for (int r = 0; r < ROUNDS; r++) {
+            if (recv_int(fd, &secret[r]) < 0) {
+                printf("Lost connection to server.\n");
+                close(fd);
+                return 1;
+            }
+        }
+        printf("The server's numbers were: %d, %d, %d\n",
+               secret[0], secret[1], secret[2]);
  
         printf("Play again? (1 = yes, 0 = no)\n");
         keep_playing = read_in_range(0, 1);
