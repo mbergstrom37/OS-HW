@@ -1,0 +1,16 @@
+Script started on 2026-10-14 14:09:10+00:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="43" LINES="30"]
+]666;vte.shell.postexec=0\]7;file://Ubuntu/home/osc/Desktop/OS-HW/Tron\]0;osc@Ubuntu:~/Desktop/OS-HW/Tron\]666;vte.shell.precmd!\[?2004h]0;osc@Ubuntu: ~/Desktop/OS-HW/Tron[01;32mosc@Ubuntu[00m:[01;34m~/Desktop/OS-HW/Tron[00m$ ./server
+[?2004l
+]133;C\
+]666;vte.shell.preexec!\Listening on port 8989
+Client 4 connected
+Client 5 connected
+Client 5 disconnected
+Client 4 disconnected
+^C
+]666;vte.shell.postexec=130\]7;file://Ubuntu/home/osc/Desktop/OS-HW/Tron\]0;osc@Ubuntu:~/Desktop/OS-HW/Tron\]666;vte.shell.precmd!\[?2004h]0;osc@Ubuntu: ~/Desktop/OS-HW/Tron[01;32mosc@Ubuntu[00m:[01;34m~/Desktop/OS-HW/Tron[00m$ exit
+[?2004l
+]133;C\
+]666;vte.shell.preexec!\exit
+
+Script done on 2026-10-14 14:14:52+00:00 [COMMAND_EXIT_CODE="130"]

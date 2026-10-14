@@ -1,0 +1,23 @@
+Script started on 2026-10-14 14:09:26+00:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="89" LINES="30"]
+]666;vte.shell.postexec=0\]7;file://Ubuntu/home/osc/Desktop/OS-HW/Tron\]0;osc@Ubuntu:~/Desktop/OS-HW/Tron\]666;vte.shell.precmd!\[?2004h]0;osc@Ubuntu: ~/Desktop/OS-HW/Tron[01;32mosc@Ubuntu[00m:[01;34m~/Desktop/OS-HW/Tron[00m$ ./c[K[K[K./client
+[?2004l
+]133;C\
+]666;vte.shell.preexec!\Connected to server
+Round 1: enter a number between 1 and 12.
+1
+Wow! Nice turn to avoid that line! On to the next round.
+Round 2: enter a number between 1 and 10.
+1
+Wow! Nice turn to avoid that line! On to the next round.
+Round 3: enter a number between 1 and 8.
+1
+You managed to maneuver around the other's lines and destroy all other bikes. You win!
+The server's numbers were: 6, 3, 6
+Play again? (1 = yes, 0 = no)
+0
+]666;vte.shell.postexec=0\]7;file://Ubuntu/home/osc/Desktop/OS-HW/Tron\]0;osc@Ubuntu:~/Desktop/OS-HW/Tron\]666;vte.shell.precmd!\[?2004h]0;osc@Ubuntu: ~/Desktop/OS-HW/Tron[01;32mosc@Ubuntu[00m:[01;34m~/Desktop/OS-HW/Tron[00m$ exit
+[?2004l
+]133;C\
+]666;vte.shell.preexec!\exit
+
+Script done on 2026-10-14 14:14:54+00:00 [COMMAND_EXIT_CODE="0"]
