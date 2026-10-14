@@ -12,7 +12,7 @@ int main() {
 	}
 
 	// Setup socket server address
-	sockaddr_in_address{};
+	sockaddr_in address{};
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(9001);
@@ -25,7 +25,7 @@ int main() {
 	}
 
 	if(listen(server,5) < 0) {
-		perror("listen");
+		std::cerr << "listen\n";
 		close(server);
 		return 1;
 	}
@@ -33,13 +33,13 @@ int main() {
 	std::cout << "Echo server now listening\n";
 
 	while(true) {
-		sockaddr_in_client{};
+		sockaddr_in client{};
 		socklen_t client_size = sizeof(client);
 
 		// This is the line that blocks and waits for a client to connect.
 		int client_s = accept(server,(sockaddr*)&client,&client_size);
 		if(client_s < 0) {
-			perror("Accept");
+			std::cerr << "Accept\n";
 			continue;
 		}
 		char buffer[1024];

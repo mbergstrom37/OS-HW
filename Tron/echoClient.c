@@ -9,25 +9,25 @@ int main() {
 	int client = socket(AF_INET, SOCK_STREAM, 0);
 
 	if(client < 0) {
-		perror("socket");
+		std::cerr << "socket\n";
 		return 1;
 	}
 
 	// Server address
-	sockaddr_in server();
+	sockaddr_in server{};
 	server.sin_family = AF_INET;
 	server.sin_port = htons(9001);
 
 	// Connect to localhost
 	if(inet_pton(AF_INET, "127.0.0.1", &server.sin_addr) <= 0) {
-		perror("inet_pton);
+		std::cerr << "inet_pton\n";
 		close(client);
 		return 1;
 	}
 
 	// Connect
 	if(connect(client, (sockaddr*)&server, sizeof(server)) < 0) {
-		perror("connect");
+		std::cerr << "connect";
 		close(client);
 		return 1;
 	}
@@ -53,7 +53,7 @@ int main() {
 		);
 
 		if(bytes_sent < 0) {
-			perror("send");
+			std::cerr << "send\n";
 			break;
 		}
 
