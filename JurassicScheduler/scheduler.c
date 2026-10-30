@@ -4,6 +4,7 @@
 
 int minimumIndex(int arr[], int size, int used[], int usedSize);
 int isInArray(int value, int arr[], int size);
+int minimumBurstIndex(int arr[], int size);
 
 int minimumIndex(int arr[], int size, int used[], int usedSize) {
 	int min = arr[0];
@@ -33,6 +34,20 @@ int isInArray(int value, int arr[], int size) {
 	return 0;
 }
 
+int minimumBurstIndex(int arr[], int size) {
+	int min = arr[0];
+	int index = 0;
+
+	for(int i = 1; i < size; i++) {
+		if(arr[i] < min) {
+			min = arr[i];
+			index = i;
+		}
+	}
+
+	return index;
+}
+
 int main() {
 	FILE *fp = fopen("text.txt", "r");
 	char ch[100];
@@ -50,6 +65,7 @@ int main() {
 	int currentTime = 0;
 	int completeProcesses = 0;
 	int fifoThroughputBool = 1;
+	int currBurstTimes[5];
 
 	if(fp == NULL) {
 		printf("Unable to open file.\n");
@@ -92,10 +108,10 @@ int main() {
 		fifo[i] = minimumIndex(arrivalTimes, lineCount, fifo, i);
 	}
 
-	printf("FIFO\n");
+	printf("\nFIFO\n");
 	for(int i = 0; i < lineCount; i++) {
 		currentTime = 0;
-		printf("%s:\t", names[fifo[i]]);
+		printf("\t%s:\t", names[fifo[i]]);
 		avgFifoWaitTime += (float)fifoWaitTime;
 		prevFifoWaitTime = fifoWaitTime;
 		for(int j = 0; j < prevFifoWaitTime + burstTimes[fifo[i]]; j++) {
@@ -103,8 +119,12 @@ int main() {
 				fifoThroughput = completeProcesses;
 				fifoThroughputBool = 0;
 			}
-			if(fifoWaitTime > 0) {
-				printf("_");
+			if(currentTime < arrivalTimes[fifo[i]]) {
+				printf(" ");
+				fifoWaitTime--;
+			}
+			else if(fifoWaitTime > 0) {
+				printf("-");
 				fifoWaitTime--;
 			}
 			else {
@@ -124,9 +144,33 @@ int main() {
 
 	avgFifoWaitTime /= (float)lineCount;
 	avgFifoResponseTime /= (float)lineCount;
-	printf("Average Wait Time: %f\n", avgFifoWaitTime);
-	printf("Average Response Time: %f\n", avgFifoResponseTime);
-	printf("Throughput over 10 cycles: %d\n", fifoThroughput);
+	printf("\tAverage Wait Time: %f\n", avgFifoWaitTime);
+	printf("\tAverage Response Time: %f\n", avgFifoResponseTime);
+	printf("\tThroughput over 10 cycles: %d\n\n", fifoThroughput);
+
+	printf("SJF\n");
+	for(int i = 0; i < lineCount; i++) {
+		currBurstTimes[i] = burstTimes[i];
+	}
+
+	for(int i = 0; i < lineCount; i++) {
+		currentTime = 0;
+		printf("\t%s\t", names[fifo[i]]);
+		for(int j = 0; j < burstTimes[fifo[i]]; j++) {
+			if(minimumBurstIndex(currBurstTimes, lineCount) == fifo[i]) {
+				printf("#");
+			}
+			else if(currentTime >= arrivalTimes[fifo[i]]) {
+				printf("-");
+			}
+			else {
+				printf(" ");
+			}
+			currBurstTimes[fifo[i]]--;
+		}
+		currBurstTimes[fifo[i]] = 100;
+		printf("\n");
+	}
 
 	fclose(fp);
 
