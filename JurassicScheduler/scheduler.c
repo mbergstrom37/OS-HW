@@ -98,7 +98,7 @@ int main() {
 	for(int i = 0; i < lineCount; i++) {
 		currentTime = 0;
 		printf("\t%s:\t", names[fifo[i]]);
-		avgFifoWaitTime += (float)fifoWaitTime;
+		avgFifoWaitTime += (float)fifoWaitTime - arrivalTimes[fifo[i]];
 		prevFifoWaitTime = fifoWaitTime;
 		for(int j = 0; j < prevFifoWaitTime + burstTimes[fifo[i]]; j++) {
 			if(currentTime == 10 && fifoThroughputBool) {
