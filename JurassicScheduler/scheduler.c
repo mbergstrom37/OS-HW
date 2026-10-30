@@ -5,6 +5,7 @@
 
 #define MAX_SIZE 5
 
+//got queue from geeksforgeeks and tweaked to fit my needs
 typedef struct {
 	int items[MAX_SIZE];
 	int front;
@@ -187,6 +188,7 @@ int main() {
 	printf("\tAverage Response Time: %f\n", avgFifoResponseTime);
 	printf("\tThroughput over 10 cycles: %d\n\n", fifoThroughput);
 
+	//SJF made mostly with AI. a failed AI-less attempt was made as a basis for the generation
 	printf("SJF\n");
 	int sjfSchedule[totalTime + 100];
 	int completed[5] = {0};
@@ -282,6 +284,8 @@ int main() {
 	printf("\tAverage Response Time %f\n", avgSjfResponseTime);
 	printf("\tThroughput over 10 cycles: %d\n\n", sjfThroughput);
 
+	//Round robin was inspired by the code I got for SJF. I used the same format and had
+	//AI do some touch ups, but I mostly did it myself.
 	printf("Round Robin\n\n");
 	int quantum = 1;
 	Queue p_queue;
@@ -317,6 +321,7 @@ int main() {
 		}
 
 		int runningProcess = dequeue(&p_queue);
+		rrSchedule[time] = runningProcess;
 		remaining[runningProcess] -= quantum;
 
 		if(remaining[runningProcess] == 0) {
@@ -329,11 +334,58 @@ int main() {
 		time++;
 	}
 
-	printf("\n");
-	for(int i = 0; i < totalTime + 100; i++) {
-		printf("%d ", rrSchedule[i]);
+	for(int i = 0; i < lineCount; i++) {
+		printf("\t%s\t", names[i]);
+		for(int j = 0; j < currentTime; j++) {
+			if(rrSchedule[j] == i) {
+				printf("#");
+			}
+			else if(j < arrivalTimes[i]) {
+				printf(" ");
+			}
+			else {
+				printf("-");
+			}
+		}
+		printf("\n");
 	}
-	printf("\n");
+
+	int completionTimesRR[5] = {0};
+	float avgRRWaitTime = 0.0;
+
+	for(int i = 0; i < lineCount; i++) {
+		for(int j = 0; j < time; j++) {
+			if(rrSchedule[j] == i) {
+				completionTimesRR[i] = j + 1;
+			}
+		}
+		avgRRWaitTime += (float)completionTimesRR[i] - (float)arrivalTimes[i] - (float)burstTimes[i];
+	}
+	avgRRWaitTime /= (float)lineCount;
+
+	int startExecTimeRR[5] = {0};
+	float avgRRResponseTime = 0.0;
+	for(int i = 0; i < lineCount; i++) {
+		for(int j = 0; j < time; j++) {
+			if(rrSchedule[j] == i) {
+				startExecTimeRR[i] = j;
+				break;
+			}
+		}
+		avgRRResponseTime += (float)startExecTimeRR[i] - (float)arrivalTimes[i];
+	}
+	avgRRResponseTime /= (float)lineCount;
+
+	int rrThroughput = 0;
+	for(int i = 0; i < lineCount; i++) {
+		if(completionTimesRR[i] <= 10) {
+			rrThroughput++;
+		}
+	}
+
+	printf("\tAverage Wait Time: %f\n", avgRRWaitTime);
+	printf("\tAverage Response Time %f\n", avgRRResponseTime);
+	printf("\tThroughput over 10 cycles: %d\n\n", rrThroughput);
 
 	fclose(fp);
 

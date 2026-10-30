@@ -1,0 +1,35 @@
+Script started on Fri 30 Oct 2026 04:31:06 AM MDT
+osc@ubuntu:~/OS-HW/JurassicScheduler$ scheduler
+
+FIFO
+	Mouse:	###############
+	Clock:	 --------------###
+	Map:	  ----------------##
+	Key:	    ----------------########
+	Average Wait Time: 11.500000
+	Average Response Time: 11.500000
+	Throughput over 10 cycles: 0
+
+SJF
+	Clock	 ###------------------------
+	Map	  --##----------------------
+	Mouse	#-------------##############
+	Key	    --########--------------
+	Average Wait Time: 4.250000
+	Average Response Time 1.000000
+	Throughput over 10 cycles: 2
+
+Round Robin
+
+	Clock	 -#--#---#------------------
+	Map	  --#---#-------------------
+	Mouse	##-#--#---#-#-#-#-#-#-#-####
+	Key	    ---#---#-#-#-#-#-#-#----
+	Average Wait Time: 9.000000
+	Average Response Time 1.500000
+	Throughput over 10 cycles: 2
+
+osc@ubuntu:~/OS-HW/JurassicScheduler$ exit
+exit
+
+Script done on Fri 30 Oct 2026 04:31:21 AM MDT
