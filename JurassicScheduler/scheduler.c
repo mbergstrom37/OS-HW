@@ -9,20 +9,22 @@ typedef struct {
 	int items[MAX_SIZE];
 	int front;
 	int rear;
+	int count;
 
 } Queue;
 
 void initQueue(Queue *q) {
-	q->front = -1;
+	q->front = 0;
 	q->rear = 0;
+	q->count = 0;
 }
 
 bool isEmpty(Queue *q) {
-	return (q->front == q->rear -1);
+	return q->count == 0;
 }
 
 bool isFull(Queue *q) {
-	return (q->rear == MAX_SIZE);
+	return q->rear == MAX_SIZE;
 }
 
 void enqueue(Queue *q, int value) {
@@ -31,23 +33,27 @@ void enqueue(Queue *q, int value) {
 		return;
 	}
 	q->items[q->rear] = value;
-	q->rear++;
+	q->rear = (q->rear + 1) % MAX_SIZE;
+	q->count++;
 }
 
-void dequeue(Queue *q) {
-	if(isEmpty(q)) {
-		printf("Queue is empty\n");
-		return;
-	}
-	q->front++;
-}
-
-int peek(Queue *q) {
+int dequeue(Queue *q) {
 	if(isEmpty(q)) {
 		printf("Queue is empty\n");
 		return -1;
 	}
-	return q->items[q->front + 1];
+	int value = q->items[q->front];
+	q->front = (q->front + 1) % MAX_SIZE;
+	q->count--;
+
+	return value;
+}
+
+int peek(Queue *q) {
+	if(isEmpty(q)) {
+		return -1;
+	}
+	return q->items[q->front];
 }
 
 int minimumIndex(int arr[], int size, int used[], int usedSize);
@@ -182,13 +188,13 @@ int main() {
 	printf("\tThroughput over 10 cycles: %d\n\n", fifoThroughput);
 
 	printf("SJF\n");
-	int sjfSchedule[totalTime];
+	int sjfSchedule[totalTime + 100];
 	int completed[5] = {0};
 
 	for(int i = 0; i < lineCount; i++) {
 		currBurstTimes[i] = burstTimes[i];
 	}
-	for(int i = 0; i < totalTime; i++) {
+	for(int i = 0; i < totalTime + 100; i++) {
 		sjfSchedule[i] = -1;
 	}
 
@@ -196,7 +202,7 @@ int main() {
 	int numCompleted = 0;
 	while(numCompleted < lineCount) {
 		int minIndex = -1;
-		int minBurst = totalTime;
+		int minBurst = totalTime + 100;
 
 		for(int i = 0; i < lineCount; i++) {
 			if(!completed[i] && arrivalTimes[i] <= currentTime) {
@@ -279,10 +285,12 @@ int main() {
 	printf("Round Robin\n\n");
 	int quantum = 1;
 	Queue p_queue;
+	initQueue(&p_queue);
 	int runningProcess = -1;
 	int time = 0;
-	int rrSchedule[totalTime];
+	int rrSchedule[totalTime + 100];
 	int completedRR[5] = {0};
+	int added[5] = {0};
 	int numCompletedRR = 0;
 	int remaining[5];
 
@@ -290,37 +298,39 @@ int main() {
 		remaining[i] = burstTimes[i];
 	}
 
-	for(int i = 0; i < totalTime; i++) {
+	for(int i = 0; i < totalTime + 100; i++) {
 		rrSchedule[i] = -1;
 	}
 
 	while(numCompletedRR < lineCount) {
 		for(int i = 0; i < lineCount; i++) {
-			for(int j = 0; j < totalTime; j++) {
-				if(!completedRR[i] && time >= arrivalTimes[i]) {
-					enqueue(&p_queue, i);
-				}
-				if(!isEmpty(&p_queue)) {
-					rrSchedule[j] = peek(&p_queue);
-					if(time % quantum == 0) {
-						dequeue(&p_queue);
-						enqueue(&p_queue, i);
-					}
-				}
+			if(!added[i] && time >= arrivalTimes[i]) {
+				enqueue(&p_queue, i);
+				added[i] = 1;
 			}
 		}
 
-		for(int i = 0; i < lineCount; i++) {
-			if(remaining[i] == 0) {
-				completedRR[i] = 1;
-				numCompletedRR++;
-			}
+		if(isEmpty(&p_queue)) {
+			rrSchedule[time] = -1;
+			time++;
+			continue;
+		}
+
+		int runningProcess = dequeue(&p_queue);
+		remaining[runningProcess] -= quantum;
+
+		if(remaining[runningProcess] == 0) {
+			completedRR[runningProcess] = 1;
+			numCompletedRR++;
+		}
+		else {
+			enqueue(&p_queue, runningProcess);
 		}
 		time++;
 	}
 
 	printf("\n");
-	for(int i = 0; i < totalTime; i++) {
+	for(int i = 0; i < totalTime + 100; i++) {
 		printf("%d ", rrSchedule[i]);
 	}
 	printf("\n");
