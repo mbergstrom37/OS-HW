@@ -4,7 +4,6 @@
 
 int minimumIndex(int arr[], int size, int used[], int usedSize);
 int isInArray(int value, int arr[], int size);
-int minimumBurstIndex(int arr[], int size);
 
 int minimumIndex(int arr[], int size, int used[], int usedSize) {
 	int min = arr[0];
@@ -135,31 +134,60 @@ int main() {
 	printf("\tThroughput over 10 cycles: %d\n\n", fifoThroughput);
 
 	printf("SJF\n");
-	int numArrived = 0;
-	int burstUsed[5] = {0,1,2,3,4};
-	int isArrived = 0;
+	int sjfSchedule[totalTime];
+	int completed[5] = {0};
+
 	for(int i = 0; i < lineCount; i++) {
-		currentTime = 0;
+		currBurstTimes[i] = burstTimes[i];
+	}
+	for(int i = 0; i < totalTime; i++) {
+		sjfSchedule[i] = -1;
+	}
+
+	currentTime = 0;
+	int numCompleted = 0;
+	while(numCompleted < lineCount) {
+		int minIndex = -1;
+		int minBurst = totalTime;
+
+		for(int i = 0; i < lineCount; i++) {
+			if(!completed[i] && arrivalTimes[i] <= currentTime) {
+				if(currBurstTimes[i] < minBurst) {
+					minBurst = currBurstTimes[i];
+					minIndex = i;
+				}
+			}
+		}
+
+		if(minIndex = -1) {
+			currentTime++;
+			continue;
+		}
+
+		sjfSchedule[currentTime] = minIndex;
+		currBurstTimes[minIndex]--;
+
+		if(currBurstTimes[minIndex] == 0) {
+			completed[minIndex] = 1;
+			numCompleted++;
+		}
+
+		currentTime++;
+	}
+
+	for(int i = 0; i < lineCount; i++) {
 		printf("\t%s\t", names[i]);
-		for(int j = 0; j < burstTimes[i]; j++) {
-			if(currentTime >= arrivalTimes[i] && !isArrived) {
-				numArrived++;
-				isArrived = 1;
-			}
-			if(minimumIndex(currBurstTimes, lineCount, burstUsed, lineCount) == i && currentTime >= arrivalTimes[i]) {
+		for(int j = 0; j < currentTime; j++) {
+			if(sjfSchedule[j] == i) {
 				printf("#");
-				currBurstTimes[i]--;
 			}
-			else if(currentTime >= arrivalTimes[i]) {
-				printf("-");
-				burstUsed[i] = -1;
-			}
-			else {
+			else if(j < arrivalTimes[i]) {
 				printf(" ");
 			}
-			currentTime++;
+			else {
+				printf("-");
+			}
 		}
-		currBurstTimes[i] = 100;
 		printf("\n");
 	}
 
