@@ -34,20 +34,6 @@ int isInArray(int value, int arr[], int size) {
 	return 0;
 }
 
-int minimumBurstIndex(int arr[], int size) {
-	int min = arr[0];
-	int index = 0;
-
-	for(int i = 1; i < size; i++) {
-		if(arr[i] < min) {
-			min = arr[i];
-			index = i;
-		}
-	}
-
-	return index;
-}
-
 int main() {
 	FILE *fp = fopen("text.txt", "r");
 	char ch[100];
@@ -149,26 +135,31 @@ int main() {
 	printf("\tThroughput over 10 cycles: %d\n\n", fifoThroughput);
 
 	printf("SJF\n");
-	for(int i = 0; i < lineCount; i++) {
-		currBurstTimes[i] = burstTimes[i];
-	}
-
+	int numArrived = 0;
+	int burstUsed[5] = {0,1,2,3,4};
+	int isArrived = 0;
 	for(int i = 0; i < lineCount; i++) {
 		currentTime = 0;
-		printf("\t%s\t", names[fifo[i]]);
-		for(int j = 0; j < burstTimes[fifo[i]]; j++) {
-			if(minimumBurstIndex(currBurstTimes, lineCount) == fifo[i]) {
-				printf("#");
+		printf("\t%s\t", names[i]);
+		for(int j = 0; j < burstTimes[i]; j++) {
+			if(currentTime >= arrivalTimes[i] && !isArrived) {
+				numArrived++;
+				isArrived = 1;
 			}
-			else if(currentTime >= arrivalTimes[fifo[i]]) {
+			if(minimumIndex(currBurstTimes, lineCount, burstUsed, lineCount) == i && currentTime >= arrivalTimes[i]) {
+				printf("#");
+				currBurstTimes[i]--;
+			}
+			else if(currentTime >= arrivalTimes[i]) {
 				printf("-");
+				burstUsed[i] = -1;
 			}
 			else {
 				printf(" ");
 			}
-			currBurstTimes[fifo[i]]--;
+			currentTime++;
 		}
-		currBurstTimes[fifo[i]] = 100;
+		currBurstTimes[i] = 100;
 		printf("\n");
 	}
 
