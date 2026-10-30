@@ -1,4 +1,4 @@
-Clock	3	1
-Map	2	2
-Mouse	15	0
-Key	8	4
+Chase	6	1
+Eat	4	2
+Cliff	4	3
+Kitchen	3	4

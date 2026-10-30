@@ -311,6 +311,7 @@ int main() {
 			if(!added[i] && time >= arrivalTimes[i]) {
 				enqueue(&p_queue, i);
 				added[i] = 1;
+
 			}
 		}
 
@@ -320,7 +321,7 @@ int main() {
 			continue;
 		}
 
-		int runningProcess = dequeue(&p_queue);
+		runningProcess = dequeue(&p_queue);
 		rrSchedule[time] = runningProcess;
 		remaining[runningProcess] -= quantum;
 
@@ -329,6 +330,12 @@ int main() {
 			numCompletedRR++;
 		}
 		else {
+			for(int i = 0; i < lineCount; i++) {
+				if(!added[i] && arrivalTimes[i] <= time + 1) {
+					enqueue(&p_queue, i);
+					added[i] = 1;
+				}
+			}
 			enqueue(&p_queue, runningProcess);
 		}
 		time++;
