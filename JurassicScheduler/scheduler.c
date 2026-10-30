@@ -2,41 +2,83 @@
 #include <string.h>
 #include <stdlib.h>
 
+int minimumIndex(int arr[], int size, int used[], int usedSize);
+int isInArray(int value, int arr[], int size);
+
+int minimumIndex(int arr[], int size, int used[], int usedSize) {
+	int min = arr[0];
+	int index = 0;
+
+	for(int i = 1; i < size; i++) {
+		printf("Is in array: %d\n", isInArray(i, used, usedSize));
+		if(arr[i] < min && !isInArray(i, used, usedSize)) {
+			min = arr[i];
+			index = i;
+		}
+	}
+
+	return index;
+}
+
+int isInArray(int value, int arr[], int size) {
+	for(int i = 0; i < size; i++) {
+		if(arr[i] == value) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
 int main() {
 	FILE *fp = fopen("text.txt", "r");
 	char ch[100];
 	char lines[5][100];
 	char names[5][100];
-	int times[5][2];
+	int burstTimes[5];
+	int arrivalTimes[5];
+	int fifo[5];
 
 	if(fp == NULL) {
 		printf("Unable to open file.\n");
 		return 1;
 	}
 	int i = 0;
-	while(fgets(ch, sizeof(ch), fp)) {
+	while(i < 5 && fgets(ch, sizeof(ch), fp)) {
 		strncpy(lines[i], ch, sizeof(lines[i]) - 1);
 		lines[i][sizeof(lines[i]) - 1] = '\0';
 		i++;
 	}
+	int lineCount = i;
 	char *token;
 
-	for(int i = 0; i < 5; i++) {
+	for(int i = 0; i < lineCount; i++) {
 		token = strtok(lines[i], "\t\n");
+		if(token == NULL) {
+			continue;
+		}
 		strncpy(names[i], token, sizeof(names[i]) - 1);
 		names[i][sizeof(names[i]) - 1] = '\0';
-		printf("%s\t", names[i]);
 		int j = 0;
-		while(token != NULL) {
-			token = strtok(NULL, "\t\n");
-			if(j < 2) {
-				times[i][j] = atoi(token);
-				printf("%d\t",times[i][j]);
+		while((token = strtok(NULL, "\t\n")) != NULL) {
+			if(token == NULL) {
+				break;
+			}
+			if(j == 0) {
+				burstTimes[i] = atoi(token);
+				j++;
+			}
+			else if(j == 1) {
+				arrivalTimes[i] = atoi(token);
 				j++;
 			}
 		}
-		printf("\n");
 	}
+
+	for(int i = 0; i < lineCount; i++) {
+		fifo[i] = minimumIndex(arrivalTimes, lineCount, fifo, i);
+	}
+	printf("\n");
 
 	fclose(fp);
 
