@@ -8,9 +8,12 @@ int isInArray(int value, int arr[], int size);
 int minimumIndex(int arr[], int size, int used[], int usedSize) {
 	int min = arr[0];
 	int index = 0;
+	while(isInArray(index, used, usedSize)) {
+		index++;
+		min = arr[index];
+	}
 
 	for(int i = 1; i < size; i++) {
-		printf("Is in array: %d\n", isInArray(i, used, usedSize));
 		if(arr[i] < min && !isInArray(i, used, usedSize)) {
 			min = arr[i];
 			index = i;
@@ -38,6 +41,9 @@ int main() {
 	int burstTimes[5];
 	int arrivalTimes[5];
 	int fifo[5];
+	int totalTime = 0;
+	int fifoWaitTime = 0;
+	int prevFifoWaitTime;
 
 	if(fp == NULL) {
 		printf("Unable to open file.\n");
@@ -66,6 +72,7 @@ int main() {
 			}
 			if(j == 0) {
 				burstTimes[i] = atoi(token);
+				totalTime = totalTime + burstTimes[i];
 				j++;
 			}
 			else if(j == 1) {
@@ -78,7 +85,22 @@ int main() {
 	for(int i = 0; i < lineCount; i++) {
 		fifo[i] = minimumIndex(arrivalTimes, lineCount, fifo, i);
 	}
-	printf("\n");
+
+	for(int i = 0; i < lineCount; i++) {
+		printf("%s:\t", names[fifo[i]]);
+		prevFifoWaitTime = fifoWaitTime;
+		for(int j = 0; j < fifoWaitTime + burstTimes[fifo[i]]; j++) {
+			if(fifoWaitTime > 0) {
+				printf("_");
+				fifoWaitTime--;
+			}
+			else {
+				printf("#");
+			}
+		}
+		fifoWaitTime = burstTimes[fifo[i]] + prevFifoWaitTime;
+		printf("\n");
+	}
 
 	fclose(fp);
 
