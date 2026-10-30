@@ -1,6 +1,54 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+#define MAX_SIZE 5
+
+typedef struct {
+	int items[MAX_SIZE];
+	int front;
+	int rear;
+
+} Queue;
+
+void initQueue(Queue *q) {
+	q->front = -1;
+	q->rear = 0;
+}
+
+bool isEmpty(Queue *q) {
+	return (q->front == q->rear -1);
+}
+
+bool isFull(Queue *q) {
+	return (q->rear == MAX_SIZE);
+}
+
+void enqueue(Queue *q, int value) {
+	if(isFull(q)) {
+		printf("Queue is full\n");
+		return;
+	}
+	q->items[q->rear] = value;
+	q->rear++;
+}
+
+void dequeue(Queue *q) {
+	if(isEmpty(q)) {
+		printf("Queue is empty\n");
+		return;
+	}
+	q->front++;
+}
+
+int peek(Queue *q) {
+	if(isEmpty(q)) {
+		printf("Queue is empty\n");
+		return -1;
+	}
+	return q->items[q->front + 1];
+}
 
 int minimumIndex(int arr[], int size, int used[], int usedSize);
 int isInArray(int value, int arr[], int size);
@@ -230,6 +278,52 @@ int main() {
 
 	printf("Round Robin\n\n");
 	int quantum = 1;
+	Queue p_queue;
+	int runningProcess = -1;
+	int time = 0;
+	int rrSchedule[totalTime];
+	int completedRR[5] = {0};
+	int numCompletedRR = 0;
+	int remaining[5];
+
+	for(int i = 0; i < lineCount; i++) {
+		remaining[i] = burstTimes[i];
+	}
+
+	for(int i = 0; i < totalTime; i++) {
+		rrSchedule[i] = -1;
+	}
+
+	while(numCompletedRR < lineCount) {
+		for(int i = 0; i < lineCount; i++) {
+			for(int j = 0; j < totalTime; j++) {
+				if(!completedRR[i] && time >= arrivalTimes[i]) {
+					enqueue(&p_queue, i);
+				}
+				if(!isEmpty(&p_queue)) {
+					rrSchedule[j] = peek(&p_queue);
+					if(time % quantum == 0) {
+						dequeue(&p_queue);
+						enqueue(&p_queue, i);
+					}
+				}
+			}
+		}
+
+		for(int i = 0; i < lineCount; i++) {
+			if(remaining[i] == 0) {
+				completedRR[i] = 1;
+				numCompletedRR++;
+			}
+		}
+		time++;
+	}
+
+	printf("\n");
+	for(int i = 0; i < totalTime; i++) {
+		printf("%d ", rrSchedule[i]);
+	}
+	printf("\n");
 
 	fclose(fp);
 
