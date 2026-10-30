@@ -159,7 +159,7 @@ int main() {
 			}
 		}
 
-		if(minIndex = -1) {
+		if(minIndex == -1) {
 			currentTime++;
 			continue;
 		}
@@ -190,6 +190,46 @@ int main() {
 		}
 		printf("\n");
 	}
+
+	int completionTimes[5] = {0};
+	float avgSjfWaitTime = 0.0;
+
+	for(int i = 0; i < lineCount; i++) {
+		for(int j = 0; j < currentTime; j++) {
+			if(sjfSchedule[j] == i) {
+				completionTimes[i] = j + 1;
+			}
+		}
+		avgSjfWaitTime += (float)completionTimes[i] - (float)arrivalTimes[i] - (float)burstTimes[i];
+	}
+	avgSjfWaitTime /= (float)lineCount;
+
+	int startExecTime[5] = {0};
+	float avgSjfResponseTime = 0.0;
+	for(int i = 0; i < lineCount; i++) {
+		for(int j = 0; j < currentTime; j++) {
+			if(sjfSchedule[j] == i) {
+				startExecTime[i] = j;
+				break;
+			}
+		}
+		avgSjfResponseTime += (float)startExecTime[i] - (float)arrivalTimes[i];
+	}
+	avgSjfResponseTime /= (float)lineCount;
+
+	int sjfThroughput = 0;
+	for(int i = 0; i < lineCount; i++) {
+		if(completionTimes[i] <= 10) {
+			sjfThroughput++;
+		}
+	}
+
+	printf("\tAverage Wait Time: %f\n", avgSjfWaitTime);
+	printf("\tAverage Response Time %f\n", avgSjfResponseTime);
+	printf("\tThroughput over 10 cycles: %d\n\n", sjfThroughput);
+
+	printf("Round Robin\n\n");
+	int quantum = 1;
 
 	fclose(fp);
 
